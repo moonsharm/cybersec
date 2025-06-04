@@ -1,0 +1,3 @@
+module.exports = {
+    VIRUSTOTAL_API_KEY: "090960958408a0ac2a1202b70fd9d3bd82067e048100bec75917d4e1fb4b3c8d"
+};

@@ -1,0 +1,104 @@
+
+header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.logo-img {
+    background-image: url('../public/img/logo.png');
+    background-size: contain;
+    width: 186px;
+    height: 186px;
+    margin-right: 50px;
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.about-text {
+    font-weight: 400;
+    text-align: center;
+    max-width: 1250px;
+    margin: auto;
+}
+
+/* Контейнер с карточками */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px auto 0;
+    gap: 30px;
+    max-width: 1200px;
+}
+
+.card {
+    width: 380px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 26px;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+
+
+.card-name {
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.card-description {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.card-img {
+    width: 135px;
+    height: 135px;
+    background-size: contain;
+    margin-bottom: 20px;
+}
+
+.card:nth-child(1) .card-img{
+    background-image: url(../public/img/card1.png);
+}
+
+.card:nth-child(2) .card-img{
+    background-image: url(../public/img/card2.png);
+}
+
+.card:nth-child(3) .card-img{
+    background-image: url(../public/img/card3.png);
+}
+
+.card:nth-child(4) .card-img{
+    background-image: url(../public/img/card4.png);
+}
+
+.card:nth-child(5) .card-img{
+    background-image: url(../public/img/card5.png);
+}

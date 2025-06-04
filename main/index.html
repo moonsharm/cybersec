@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Гид по кибербезопасности</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../public/common-styles.css" />
+    <link rel="icon" href="../public/img/logo.png" type="image/x-icon">
+  </head>
+  <body>
+    <header>
+        <div class="logo">
+            <div class="logo-img"></div>
+            <h1 class="logo-text">Киберквест</h1>
+        </div>
+      <h2 class="about-text">Этот сайт - ваш интерактивный гид по основам информационной безопасности. Здесь теория совмещена с практикой,  выбирайте интересующий раздел и экспериментируйте прямо на сайте!</p>
+    </header>
+
+    <div class="container">
+      <div class="card" onclick="location.href='../functions/urlcheck/url-check.html'">
+        <div class="card-img"></div>
+        <h3 class="card-name">Анализ безопасности сайта</h3>
+        <p class="card-description">
+          Узнай, насколько безопасен сайт перед его посещением. Проверим
+          SSL-сертификат и проанализируем репутацию домена с помощью VirusTotal.
+        </p>
+      </div>
+
+      <div class="card" onclick="location.href='../functions/cypher/cypher-files.html'">
+        <div class="card-img"></div>
+        <h3 class="card-name">Шифрование файлов</h3>
+        <p class="card-description">
+          Симметричное или ассиметричное шифрование? Открытый или закрытый ключ?
+          Познакомимся с основами шифрования и попробуем сами.
+        </p>
+      </div>
+
+      <div class="card" onclick="location.href='../functions/anonymity/anonymity.html'">
+        <div class="card-img"></div>
+        <h3 class="card-name">Проверка на анонимность</h3>
+        <p class="card-description">
+          Насколько вы анонимны в интернете? Узнайте, какие данные о вас может
+          получить сайт: IP-адрес, местоположение, браузер и другие следы.
+        </p>
+      </div>
+
+      <div class="card" onclick="location.href='../functions/clearmeta/clear-meta.html'">
+        <div class="card-img"></div>
+        <h3 class="card-name">Метаданные</h3>
+        <p class="card-description">
+          Фото может рассказать о вас больше, чем вы думаете! Очистите
+          метаданные и удалите GPS-координаты, дату съемки и модель устройства
+          перед публикацией.
+        </p>
+      </div>
+
+      <div class="card" onclick="location.href='../functions/password/password-helper.html'">
+        <div class="card-img"></div>
+        <h3 class="card-name">Надёжность пароля</h3>
+        <p class="card-description">
+          Насколько стойкий ваш пароль? Проверьте, за сколько его можно взломать
+          и создайте действительно надежный пароль одним кликом!
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

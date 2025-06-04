@@ -1,0 +1,214 @@
+/* Стили навигационного меню */
+
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-right: 60px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logo:hover {
+    opacity: 0.9;
+}
+
+.logo-img {
+    background-image: url('../../public/img/logo.png');
+    background-size: contain;
+    width: 80px;
+    height: 80px;
+    margin-right: 14px;
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 28px;
+}
+
+header {
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+    height: 20px;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: 0.3s;
+    padding: 10px;
+}
+
+.menu a:hover {
+    opacity: 0.8;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin: 40px auto 0;
+    max-width: 1200px;
+    flex-direction: column;
+}
+
+.container h2 {
+    font-weight: 600;
+}
+
+.card {
+    width: 100%;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 26px;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+}
+
+/* --------------------Блоки с инфой--------------------- */
+
+
+.content-h3 {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.content-h2 {
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.content-h1 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    margin-top: 5px;
+}
+
+p {
+    margin-top: 5px;
+  }
+
+.accordion {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    width: 100%;
+    background-color: #485cac;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.accordion:after {
+    content: '▼';
+    font-size: 20px;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "▲";
+}
+
+
+.active,
+.accordion:hover {
+    background-color: #5e75cf;
+}
+
+
+.panel {
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    padding: 0 15px;
+    box-sizing: border-box;
+
+    width: 1128px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* -------------------Практика------------------ */
+.practice-container {
+    display: flex;
+    flex-direction: column;
+    width: 1100px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.1s;
+    background-color: #485cac;
+    border: 2px solid #485cac;
+    color: #fff;
+    box-sizing: border-box;
+    width: 400px;
+    margin: 15px auto;
+}
+
+button:hover {
+    background-color: #fff;
+    border: 2px solid #485cac;
+    color: #485cac;
+}
+
+#report {
+    border-radius: 10px;
+    padding: 16px;    /* ограничение по ширине контейнера */
+    width: 1000px;          /* или конкретное значение, например 600px */
+    box-sizing: border-box;
+  display: none;
+  text-align: left;
+  margin: 0 auto;
+}
