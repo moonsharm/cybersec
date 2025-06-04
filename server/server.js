@@ -15,6 +15,19 @@ app.use(cors());
 app.use(fileUpload());
 app.use(express.json());
 
+app.use('/public', express.static(path.join(__dirname, '../public')));
+
+// Раздаём папку main (основная страница)
+app.use('/main', express.static(path.join(__dirname, '../main')));
+
+// Раздаём все функции (если хочешь доступ по /functions/...)
+app.use('/functions', express.static(path.join(__dirname, '../functions')));
+
+// Главная страница при заходе на /
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../main/index.html'));
+});
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {
     setHeaders: (res) => {
         res.setHeader("Content-Disposition", "attachment");
