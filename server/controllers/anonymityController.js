@@ -6,7 +6,6 @@ const axios = require('axios');
 
 // Включаем CORS для всех маршрутов
 app.use(cors());
-app.use(fileUpload());
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Original-Extension");
