@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
 
-const exiftoolPath = "C:\\exiftool\\exiftool.exe";
+const exiftoolPath = "../../public/exiftool/exiftool.exe";
 
 exports.processFile = async (req, res) => {
     if (!req.files || !req.files.file) {
