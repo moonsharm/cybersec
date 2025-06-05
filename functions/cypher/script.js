@@ -39,7 +39,7 @@ async function encryptFile() {
     formData.append("password", password);
 
     try {
-        const response = await fetch("http://localhost:3000/api/encrypt", {
+        const response = await fetch("/api/encrypt", {
             method: "POST",
             body: formData
         });
@@ -70,7 +70,7 @@ async function decryptFile() {
     formData.append("password", password);
 
     try {
-        const response = await fetch("http://localhost:3000/api/decrypt", {
+        const response = await fetch("/api/decrypt", {
             method: "POST",
             body: formData
         });

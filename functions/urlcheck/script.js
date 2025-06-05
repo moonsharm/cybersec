@@ -17,7 +17,7 @@ async function checkDomainAndSecurity() {
 
   try {
     const [domainData] = await Promise.allSettled([
-      fetch(`http://localhost:3000/api/domain-check?domain=${domain}`).then(res => res.json())
+      fetch(`/api/domain-check?domain=${domain}`).then(res => res.json())
     ]);
 
     resultContainer.innerHTML = "";

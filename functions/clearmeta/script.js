@@ -30,7 +30,7 @@ document.getElementById("process-file-button").addEventListener("click", async (
     formData.append("file", fileInput.files[0]);
 
     try {
-        const response = await fetch("http://localhost:3000/api/process-file", {
+        const response = await fetch("/api/process-file", {
             method: "POST",
             body: formData,
         });
@@ -72,7 +72,7 @@ document.getElementById("process-file-button").addEventListener("click", async (
         downloadButton.style.display = "inline-block";
         downloadButton.onclick = () => {
             const link = document.createElement("a");
-            link.href = `http://localhost:3000${data.downloadUrl}`;
+            link.href = `/${data.downloadUrl}`;
             link.download = "cleaned_file.jpg";
             document.body.appendChild(link);
             link.click();
