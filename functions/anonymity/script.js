@@ -1,7 +1,7 @@
 // Функция для получения IP и местоположения
 async function getIPAndLocation() {
     try {
-      const response = await fetch('http://ip-api.com/json/');
+      const response = await fetch('/api/ip-info');
       const data = await response.json();
       return {
         ip: data.query,
