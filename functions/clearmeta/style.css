@@ -261,3 +261,33 @@ pre {
     font-family: monospace;
   }
   
+   .metadata {
+  font-family: monospace;
+  margin-bottom: 2rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 600px;
+  background-color: #f9f9f9;
+}
+
+.metadata-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.metadata-key {
+  font-weight: bold;
+  color: #333;
+  margin-right: 1rem;
+  white-space: nowrap;
+}
+
+.metadata-value {
+  color: #555;
+  text-align: right;
+  flex-grow: 1;
+  overflow-wrap: anywhere;
+}

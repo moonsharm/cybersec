@@ -10,84 +10,99 @@ document.getElementById("file-input").addEventListener("change", () => {
 });
 
 document.getElementById("process-file-button").addEventListener("click", async (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    document.getElementById("original-metadata").style.display = "block";
-    document.getElementById("cleaned-metadata").style.display = "block";
-    document.getElementById("original-metadata-h").textContent = 'Метаданные оригинального файла:';
-    document.getElementById("cleaned-metadata-h").textContent = 'Метаданные очищенного файла:';
-    document.getElementById("original-metadata").textContent = 'Загрузка данных...';
-    document.getElementById("cleaned-metadata").textContent = 'Загрузка данных...';
+  document.getElementById("original-metadata").style.display = "block";
+  document.getElementById("cleaned-metadata").style.display = "block";
+  document.getElementById("original-metadata-h").textContent = 'Метаданные оригинального файла:';
+  document.getElementById("cleaned-metadata-h").textContent = 'Метаданные очищенного файла:';
+  document.getElementById("original-metadata").textContent = 'Загрузка данных...';
+  document.getElementById("cleaned-metadata").textContent = 'Загрузка данных...';
 
-    const formData = new FormData();
-    const fileInput = document.getElementById("file-input");
+  const formData = new FormData();
+  const fileInput = document.getElementById("file-input");
 
-    if (!fileInput.files.length) {
-        alert("Выберите файл для загрузки!");
-        return;
+  if (!fileInput.files.length) {
+    alert("Выберите файл для загрузки!");
+    return;
+  }
+
+  formData.append("file", fileInput.files[0]);
+
+  try {
+    const response = await fetch("/api/process-file", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Ошибка при отправке на сервер");
     }
 
-    formData.append("file", fileInput.files[0]);
+    const data = await response.json();
 
-    try {
-        const response = await fetch("/api/process-file", {
-            method: "POST",
-            body: formData,
-        });
 
-        if (!response.ok) {
-            throw new Error("Ошибка при отправке на сервер");
-        }
-
-        const data = await response.json();
-
-        const hiddenKeys = [
-          "Rendering Parameters",
-          "Intrinsic Matrix",
-          "Inverse Lens Distortion Coefficients",
-          "Lens Distortion Coefficients",
-          "Region Area Y",
-          "Region Area W",
-          "Region Area X",
-          "Region Area H",
-          "Region Area Unit",
-          "Region Type",
-          "Chromatic Adaptation",
-          "Directory"
-      ];
-
-      function filterMetadata(metadata) {
-          return metadata
-              .split("\n") // Разбиваем на строки
-              .filter(line => !hiddenKeys.some(key => line.startsWith(key))) // Убираем ненужные параметры
-              .join("\n"); // Собираем обратно
+    function formatValue(value) {
+      if (value && typeof value === "object" && value._ctor === "ExifDateTime") {
+        return `${value.year}-${String(value.month).padStart(2, '0')}-${String(value.day).padStart(2, '0')} ` +
+          `${String(value.hour).padStart(2, '0')}:${String(value.minute).padStart(2, '0')}:${String(value.second).padStart(2, '0')}`;
       }
 
-      // Фильтруем оригинальные и очищенные метаданные
-      document.getElementById("original-metadata").textContent = filterMetadata(data.originalMetadata);
-      document.getElementById("cleaned-metadata").textContent = filterMetadata(data.cleanedMetadata);
+      if (value && typeof value === "object") {
+        return JSON.stringify(value, null, 2);
+      }
 
-        // Делаем кнопку скачивания активной
-        const downloadButton = document.getElementById("download-button");
-        downloadButton.style.display = "inline-block";
-        downloadButton.onclick = () => {
-            const link = document.createElement("a");
-            link.href = `/${data.downloadUrl}`;
-            link.download = "cleaned_file.jpg";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-    } catch (error) {
-        console.error("Ошибка:", error);
+      return String(value);
     }
+
+
+    function renderMetadata(metadata, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+
+      Object.entries(metadata).forEach(([key, value]) => {
+        const row = document.createElement("div");
+        row.className = "metadata-row";
+
+        const keyEl = document.createElement("div");
+        keyEl.className = "metadata-key";
+        keyEl.textContent = key;
+
+        const valueEl = document.createElement("div");
+        valueEl.className = "metadata-value";
+        valueEl.textContent = formatValue(value);
+
+        row.appendChild(keyEl);
+        row.appendChild(valueEl);
+        container.appendChild(row);
+      });
+    }
+
+
+    renderMetadata(data.originalMetadata, "original-metadata");
+    renderMetadata(data.cleanedMetadata, "cleaned-metadata");
+
+    // Делаем кнопку скачивания активной
+    const downloadButton = document.getElementById("download-button");
+    downloadButton.style.display = "inline-block";
+    downloadButton.onclick = () => {
+      const link = document.createElement("a");
+      link.href = `/${data.downloadUrl}`;
+      link.download = "cleaned_file.jpg";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+  } catch (error) {
+    console.error("Ошибка:", error);
+  }
 });
 
 var acc = document.getElementsByClassName("accordion");
 var i;
 
 for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
+  acc[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var panel = this.nextElementSibling;
     if (panel.style.maxHeight) {
@@ -172,9 +187,8 @@ function renderQuestion() {
   q.answers.forEach((answer, index) => {
     const id = `answer_${index}`;
     const label = document.createElement("label");
-    label.innerHTML = `<input type="radio" name="answer" id="${id}" value="${index}" ${
-      selectedAnswers[currentQuestion] === index ? "checked" : ""
-    }> ${answer}`;
+    label.innerHTML = `<input type="radio" name="answer" id="${id}" value="${index}" ${selectedAnswers[currentQuestion] === index ? "checked" : ""
+      }> ${answer}`;
     answersContainer.appendChild(label);
   });
 

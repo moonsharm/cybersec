@@ -1,8 +1,25 @@
 const fs = require("fs");
 const path = require("path");
-const { exec } = require("child_process");
+const { exiftool } = require("exiftool-vendored");
 
-const exiftoolPath = "../../public/exiftool/exiftool.exe";
+
+
+const cleanExifData = (data) => {
+    const result = {};
+    for (const [key, value] of Object.entries(data)) {
+        // Пропускаем внутренние служебные поля
+        if (["SourceFile", "Directory", "errors", "RenderingParameters", "IntrinsicMatrix", "InverseLensDistortionCoefficients", "LensDistortionCoefficients",
+            "RegionAreaY", "RegionAreaW", "RegionAreaX", "RegionAreaH", "RegionAreaUnit", "RegionType", "ChromaticAdaptation",].includes(key)) continue;
+
+        // Преобразуем вложенные даты в строки
+        if (typeof value === "object" && value?._ctor === "ExifDateTime") {
+            result[key] = `${value.year}-${String(value.month).padStart(2, "0")}-${String(value.day).padStart(2, "0")} ${value.hour}:${value.minute}:${value.second}`;
+        } else {
+            result[key] = value;
+        }
+    }
+    return result;
+};
 
 exports.processFile = async (req, res) => {
     if (!req.files || !req.files.file) {
@@ -10,32 +27,26 @@ exports.processFile = async (req, res) => {
     }
 
     const uploadedFile = req.files.file;
-    const tempFilePath = path.join(__dirname, "../uploads", uploadedFile.name);
+    const uploadDir = path.join(__dirname, "../uploads");
 
-    fs.writeFile(tempFilePath, uploadedFile.data, (err) => {
-        if (err) {
-            console.error("Ошибка при сохранении файла:", err);
-            return res.status(500).json({ error: "Ошибка сохранения файла" });
-        }
-        console.log("Файл успешно сохранен:", tempFilePath);
-        
-      });
+    // Убедись, что папка существует
+    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
-    exec(`"${exiftoolPath}" -all "${tempFilePath}"`, (error, originalMetadata) => {
-        if (error) return res.status(500).json({ error: "Ошибка получения метаданных" });
+    const tempFilePath = path.join(uploadDir, uploadedFile.name);
+    fs.writeFileSync(tempFilePath, uploadedFile.data);
 
-        exec(`"${exiftoolPath}" -all= -overwrite_original "${tempFilePath}"`, (error) => {
-            if (error) return res.status(500).json({ error: "Ошибка очистки метаданных" });
+    try {
+        const originalMetadata = await exiftool.read(tempFilePath);
+        await exiftool.write(tempFilePath, {}, ['-all=']);
+        const cleanedMetadata = await exiftool.read(tempFilePath);
 
-            exec(`"${exiftoolPath}" -all "${tempFilePath}"`, (error, cleanedMetadata) => {
-                if (error) return res.status(500).json({ error: "Ошибка получения очищенных метаданных" });
-
-                res.json({
-                    originalMetadata,
-                    cleanedMetadata,
-                    downloadUrl: `/uploads/${path.basename(tempFilePath)}`,
-                });
-            });
+        res.json({
+            originalMetadata: cleanExifData(originalMetadata),
+            cleanedMetadata: cleanExifData(cleanedMetadata),
+            downloadUrl: `/uploads/${path.basename(tempFilePath)}`,
         });
-    });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Ошибка при обработке метаданных" });
+    }
 };
